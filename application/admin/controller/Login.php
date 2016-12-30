@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use think\Controller;
 use think\Db;
+use think\Session;
 class Login extends Controller
 {
     public function login()
@@ -15,7 +16,8 @@ class Login extends Controller
     	$where['user_pwd'] = $userpwd;
         $result=Db::table('admin')->where($where)->find();
         if($result){
-           $this->success("登陆成功",'http://www.qq.com');
+            Session::set('usernic',$result['user_nic'],'think');
+           $this->success("登陆成功",'Index/');
         }else{
            $this->error("登陆失败！用户名/密码错误！");	
         }
